@@ -50,7 +50,7 @@ public class DepartmentController {
 
         departmentListView.setItems(list);
     }
-
+//o
     public void deleClicked(ActionEvent actionEvent) {
         Department selected = departmentListView.getSelectionModel().getSelectedItem();
 

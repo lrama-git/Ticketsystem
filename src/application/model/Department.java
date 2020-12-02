@@ -12,5 +12,6 @@ public class Department {
     public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
     }
+    //
 }
 
