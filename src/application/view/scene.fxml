@@ -26,7 +26,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Users">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#editStaticlicked" text="bearbeiten" />
+                        <MenuItem mnemonicParsing="false" onAction="#editUserclicked" text="bearbeiten" />
                      </items>
                   </Menu>
             </items>
