@@ -22,5 +22,10 @@ public class Controller {
         loader.loadFXML("view/department.fxml", "Department bearbeiten");
     }
 
+    public void editUsersClicked(ActionEvent actionEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/users.fxml", "User bearbeiten");
+    }
+
 //wichtig über git arbeite, gleich blaues pfeil drücken
 }
