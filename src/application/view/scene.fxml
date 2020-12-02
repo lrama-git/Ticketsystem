@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.Controller">
    <children>
       <MenuBar layoutY="1.0" prefHeight="18.0" prefWidth="635.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -23,6 +24,11 @@
                   <Menu mnemonicParsing="false" text="Prioritäten">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#editPrioritiesclicked" text="bearbeiten" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Department">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#editDepartmentClicked" text="bearbeiten" />
                     </items>
                   </Menu>
             </items>

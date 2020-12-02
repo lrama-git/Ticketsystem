@@ -17,5 +17,10 @@ public class Controller {
         loader.loadFXML("view/priorities.fxml" , "Prioritäten bearbeiten");
     }
 
+    public void editDepartmentClicked(ActionEvent actionEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/department.fxml", "Department bearbeiten");
+    }
+
 //wichtig über git arbeite, gleich blaues pfeil drücken
 }
