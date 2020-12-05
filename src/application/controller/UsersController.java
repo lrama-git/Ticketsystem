@@ -29,6 +29,7 @@ public class UsersController {
     public void initialize() {
         load(new File("users.csv"));
     }
+
     public void load(File file) {
         String s;
         BufferedReader br = null;
@@ -44,7 +45,13 @@ public class UsersController {
                     String[] words = s.split(";");
                     a.number = words[0];
                     a.name = words[1];
-                    number = Integer.parseInt(words[0]) ;
+                    a.title = words[2];
+                    a.street = words[3];
+                    a.plz = words[4];
+                   a.ort = words[5];
+                   //a.country = words[6];
+                    //a.abteilungsnummer = words[7];
+                    number = Integer.parseInt(words[0]);
 
                     list.add(a); // füge Artikel zur Liste hinzu
                 }
@@ -78,7 +85,7 @@ public class UsersController {
             selectedUser.ort = ort.getText();
             selectedUser.plz = plz.getText();
             selectedUser.street = street.getText();
-           // selectedUser.abteilungsnummer = abteilung.getText();??????????????????????????????????????????????????
+            // selectedUser.abteilungsnummer = abteilung.getText();??????????????????????????????????????????????????
 
 
             userListView.refresh();
@@ -100,6 +107,7 @@ public class UsersController {
 
         fileWriter();
     }
+
     private void fileWriter() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
@@ -127,8 +135,8 @@ public class UsersController {
             street.setText(selected.street);
             plz.setText(selected.plz);
             ort.setText(selected.ort);
-           // country.setText(selected.?);
-           //   ??????????????????????????? abteilung.setSelectionModel(selected.abteilungsnummer);
+            // country.setText(selected.?);
+            //   ??????????????????????????? abteilung.setSelectionModel(selected.abteilungsnummer);
             /**
              *  public TextField title;
              *     public TextField nameUser;
