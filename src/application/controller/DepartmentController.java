@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.*;
 
 public class DepartmentController {
+
     public TextField departmentTextfield;
     public ListView<Department> departmentListView;
     ObservableList<Department> list = FXCollections.observableArrayList();
@@ -20,37 +21,13 @@ public class DepartmentController {
     private Department selectedDepartment = null;
 
     public void initialize() {
-        load(new File("department.csv"));
+        departmentListView.setItems(Department.load("department.csv"));
     }
 
-    private void load(File file) {
-        String s;
-        BufferedReader br = null;
+    private void load() {
 
-        try {
-            br = new BufferedReader(new FileReader(file));
-            try {
-                while ((s = br.readLine()) != null) {
-                    // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                    Department a = new Department();
-
-                    String[] words = s.split(";");
-                    a.number = words[0];
-                    a.name = words[1];
-                    number = Integer.parseInt(words[0]) ;
-
-                    list.add(a); // füge Artikel zur Liste hinzu
-                }
-            } finally {
-                br.close();
-            }
-        } catch (IOException io) {
-        }
-
-        departmentListView.setItems(list);
     }
-//o
+
     public void deleClicked(ActionEvent actionEvent) {
         Department selected = departmentListView.getSelectionModel().getSelectedItem();
 
@@ -63,8 +40,6 @@ public class DepartmentController {
 
     public void saveClicked(ActionEvent actionEvent) {
         if (this.selectedDepartment != null) {
-
-
             selectedDepartment.name = departmentTextfield.getText();
 
             departmentListView.refresh();
@@ -78,7 +53,7 @@ public class DepartmentController {
 
         }
 
-        fileWriter();
+        fileWriter();//
     }
 
     public void newClicked(ActionEvent actionEvent) {
