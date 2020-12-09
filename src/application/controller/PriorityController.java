@@ -20,34 +20,8 @@ public class PriorityController {
 
 
     public void initialize() {
-        load(new File("priorities.csv"));
-    }
-    public void load(File file) {
-        String s;
-        BufferedReader br = null;
+        priorityListView.setItems(Priority.loadFile("priorities.csv"));
 
-        try {
-            br = new BufferedReader(new FileReader(file));
-            try {
-                while ((s = br.readLine()) != null) {
-                    // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                    Priority a = new Priority();
-
-                    String[] words = s.split(";");
-                    a.number = words[0];
-                    a.name = words[1];
-                    number = Integer.parseInt(words[0]) ;
-
-                    list.add(a); // füge Artikel zur Liste hinzu
-                }
-            } finally {
-                br.close();
-            }
-        } catch (IOException io) {
-        }
-
-        priorityListView.setItems(list);
     }
     public void listclicked(MouseEvent mouseEvent) {
         Priority selected = priorityListView.getSelectionModel().getSelectedItem();
@@ -114,6 +88,5 @@ public class PriorityController {
 
         fileWriter();
     }
-
 
 }
