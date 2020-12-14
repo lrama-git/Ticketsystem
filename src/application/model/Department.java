@@ -3,9 +3,7 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Department {
     public String number;
@@ -19,9 +17,9 @@ public class Department {
     public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
     }
-    //
 
-    public static ObservableList<Department> load(String filename){
+
+    public static ObservableList<Department> load(String filename) {
         ObservableList<Department> result = FXCollections.observableArrayList();
         String s;
         BufferedReader br = null;
@@ -39,7 +37,6 @@ public class Department {
                     a.name = words[1];
 
 
-
                     result.add(a); // füge Artikel zur Liste hinzu
                 }
             } finally {
@@ -50,5 +47,26 @@ public class Department {
 
         return result;
     }
+
+    public static ObservableList<Department> writer(String filename) {
+        ObservableList<Department> result = FXCollections.observableArrayList();
+        //ObservableList<Department> list = FXCollections.observableArrayList();
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
+
+            for (Department a : result) {
+                bw.write(a.newCSVLine());
+
+            }
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }
 
