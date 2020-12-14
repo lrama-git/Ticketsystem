@@ -27,43 +27,8 @@ public class UsersController {
     private User selectedUser = null;
 
     public void initialize() {
-        load(new File("users.csv"));
+        userListView.setItems(User.loadFile("users.csv"));
     }
-
-    public void load(File file) {
-        String s;
-        BufferedReader br = null;
-
-        try {
-            br = new BufferedReader(new FileReader(file));
-            try {
-                while ((s = br.readLine()) != null) {
-                    // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                    User a = new User();
-
-                    String[] words = s.split(";");
-                    a.number = words[0];
-                    a.name = words[1];
-                    a.title = words[2];
-                    a.street = words[3];
-                    a.plz = words[4];
-                   a.ort = words[5];
-                   //a.country = words[6];
-                    //a.abteilungsnummer = words[7];
-                    number = Integer.parseInt(words[0]);
-
-                    list.add(a); // füge Artikel zur Liste hinzu
-                }
-            } finally {
-                br.close();
-            }
-        } catch (IOException io) {
-        }
-
-        userListView.setItems(list);
-    }
-
 
     public void deleteclicked(ActionEvent actionEvent) {
         User selected = userListView.getSelectionModel().getSelectedItem();
@@ -104,11 +69,11 @@ public class UsersController {
             // erzeuge neuen Artikel, füge ihn in die ListView ein
             // und speichere alles in die Datei
         }
-
-        fileWriter();
+        //userListView.setItems(User.loadFile("users.csv")); ??
+        //fileWriter();
     }
 
-    private void fileWriter() {
+    /** private void fileWriter() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
 
@@ -123,6 +88,7 @@ public class UsersController {
             e.printStackTrace();
         }
     }
+     */
 
     public void userClicked(MouseEvent mouseEvent) {
         User selected = userListView.getSelectionModel().getSelectedItem();
