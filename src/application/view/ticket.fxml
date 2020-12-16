@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="339.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TicketController">
+<AnchorPane prefHeight="339.0" prefWidth="456.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.TicketController">
    <children>
-      <TextField layoutX="15.0" layoutY="32.0" prefHeight="26.0" prefWidth="425.0" promptText="Ticketname" AnchorPane.bottomAnchor="280.6" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.399999999999977" AnchorPane.topAnchor="32.0" />
-      <ComboBox layoutX="14.0" layoutY="244.0" prefHeight="26.0" prefWidth="425.0" promptText="stati" AnchorPane.bottomAnchor="68.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.600000000000023" AnchorPane.topAnchor="244.0" />
-      <ComboBox layoutX="14.0" layoutY="170.0" prefHeight="26.0" prefWidth="426.0" promptText="priority" AnchorPane.bottomAnchor="142.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.600000000000023" AnchorPane.topAnchor="170.0" />
+      <TextField fx:id="nameTextfield" layoutX="15.0" layoutY="32.0" prefHeight="26.0" prefWidth="425.0" promptText="Ticketname" AnchorPane.bottomAnchor="280.6" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.399999999999977" AnchorPane.topAnchor="32.0" />
+      <ComboBox fx:id="statusComboBox" layoutX="14.0" layoutY="244.0" prefHeight="26.0" prefWidth="425.0" promptText="stati" AnchorPane.bottomAnchor="68.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.600000000000023" AnchorPane.topAnchor="244.0" />
+      <ComboBox fx:id="priotityComboBox" layoutX="14.0" layoutY="170.0" prefHeight="26.0" prefWidth="426.0" promptText="priority" AnchorPane.bottomAnchor="142.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.600000000000023" AnchorPane.topAnchor="170.0" />
       <Label layoutX="21.0" layoutY="14.0" text="Tickets" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="14.0" />
-      <ComboBox layoutX="14.0" layoutY="209.0" prefHeight="26.0" prefWidth="426.0" promptText="order" AnchorPane.bottomAnchor="103.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.600000000000023" AnchorPane.topAnchor="209.0" />
+      <ComboBox fx:id="orderComboBox" layoutX="14.0" layoutY="209.0" prefHeight="26.0" prefWidth="426.0" promptText="order" AnchorPane.bottomAnchor="103.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="15.600000000000023" AnchorPane.topAnchor="209.0" />
       <Button layoutX="300.0" layoutY="295.0" mnemonicParsing="false" text="speichern" AnchorPane.bottomAnchor="18.4" AnchorPane.rightAnchor="88.8" AnchorPane.topAnchor="295.0" />
       <Button layoutX="382.0" layoutY="295.0" mnemonicParsing="false" text="löschen" AnchorPane.bottomAnchor="18.4" AnchorPane.rightAnchor="17.200000000000003" AnchorPane.topAnchor="295.0" />
-      <TextArea layoutX="15.0" layoutY="65.0" prefHeight="94.0" prefWidth="425.0" AnchorPane.bottomAnchor="179.6" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.399999999999977" AnchorPane.topAnchor="65.0" />
+      <TextArea fx:id="descriptionTextfield" layoutX="15.0" layoutY="65.0" prefHeight="94.0" prefWidth="425.0" AnchorPane.bottomAnchor="179.6" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.399999999999977" AnchorPane.topAnchor="65.0" />
    </children>
 </AnchorPane>

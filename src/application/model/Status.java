@@ -12,6 +12,7 @@ import java.io.IOException;
 public class Status {
     public String number;
     public String name;
+    public Object id;
 
 
     @Override

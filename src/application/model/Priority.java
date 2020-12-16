@@ -10,6 +10,7 @@ import java.io.*;
 public class Priority {
     public String number;
     public String name;
+    public Object id;
 
     @Override
     public String toString() {
