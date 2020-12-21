@@ -10,9 +10,19 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Status {
-    public String number;
+    public int number;
     public String name;
     public Object id;
+
+    public Status(int id, String name) {
+        this.number = id;
+        this.name = name;
+
+    }
+    public Status(){
+        number = 0;
+        name = "";
+    }
 
 
     @Override
@@ -41,7 +51,7 @@ public class Status {
                     Status a = new Status();
 
                     String[] words = s.split(";");
-                    a.number = words[0];
+                    a.number = Integer.getInteger(words[0]);
                     a.name = words[1];
 
 

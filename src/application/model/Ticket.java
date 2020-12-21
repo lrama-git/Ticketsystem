@@ -8,53 +8,79 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Ticket {
-    public int id;
+    //das is Person? kein Ticket
+    /**public String number;
+    public String name;
+    public String title;
+    public String street;
+    public String plz;
+    public String ort;
+    public String abteilungsnummer;
+     */
+    public int nummer;
     public String name;
     public String description;
-    public Priority priority;
     public Status status;
+    public Priority priority;
 
-    public Ticket(int id, String name, String description, int status, int priority){
-        this.id = id;
-        this.name= name;
-        this.description= description;
-        this.status= new Status(status, "");
-        this.priority= new Priority(priority, "");
+    public Ticket(int id, String name,String description, int status, int priority){
+        this.nummer = id;
+        this.name = name;
+        this.status = new Status(status, "");
+        this.priority = new Priority(priority, "");
+    }
+    public Ticket(){
+        this.nummer = 0;
+        name = "";
+        description = "";
+        status = null;
+        priority = null;
     }
 
-    @Override
+  //  1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+
+
     public String toString() {
-        return name;
+        return nummer + " - " + name ;
     }
-    public static ObservableList<Ticket> load(String filename) {
+    public static ObservableList<Ticket> loadFile(String filename) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
 
-        String s;
+        String s = null;
         BufferedReader br = null;
 
         try {
             br = new BufferedReader(new FileReader(filename));
             try {
                 while ((s = br.readLine()) != null) {
-                    // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
+                    while ((s = br.readLine()) != null) {
+                        // s enthält die gesamte Zeile
+                        s = s.replace("\"", ""); // ersetze alle " in der Zeile
+                        Ticket a = new Ticket();
 
+                        //  1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
 
-                    String[] words = s.split(";");
-                    Ticket a = new Ticket(Integer.parseInt(words[0]), words[1], words[2], Integer.parseInt(words[3]), Integer.parseInt(words[4]));
+                        String[] words = s.split(";");
+                        a.nummer = Integer.getInteger(words[0]);
+                        a.name = words[1];
+                        a.description = words[2];
+                        a.status.number = words[3];
+                        a.priority.number = words[4];
 
+                        return result;
 
-
-                    result.add(a); // füge Artikel zur Liste hinzu
+                    }
                 }
             } finally {
                 br.close();
             }
         } catch (IOException io) {
-            io.printStackTrace();
         }
-
         return result;
     }
 
+    public String newCSVLine() {
+        //1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+        return nummer + "\";\"" + name + "\";\"" + description +  "\";\"" + status.number +  "\";\"" + priority.number +  "\";\"";
+    }
 }

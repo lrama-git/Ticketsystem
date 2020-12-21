@@ -13,56 +13,51 @@ public class User {
     public String street;
     public String plz;
     public String ort;
-    public String abteilungsnummer;
+    public Department abteilung;
 
     @Override
-    public String toString() {
-        return number + " - " + title + name;
+    public String toString() { return number + " - " + title + name;}
+
+    public String newCSVLine (){
+        return number + "\";\"" + title + "\";\""+ name + "\";\"" + street + "\";\"" +
+                plz + "\";\"" + ort + "\";\"" + abteilung.number + "\";\"";
     }
+//3;Dipl-Ing.;Heinz Schweiger;AC/DC Straße 1;666;Rockcity;1
+public static ObservableList<User> loadFile(String filename) {
+    ObservableList<User> result = FXCollections.observableArrayList();
 
-    public String newCSVLine() {
-        return number + "\";\"" + title + "\";\"" + name + "\";\"" + street + "\";\"" +
-                plz + "\";\"" + ort + "\";\"" + abteilungsnummer + "\";\"";
-    }
+    String s = null;
+    BufferedReader br = null;
 
-    //3;Dipl-Ing.;Heinz Schweiger;AC/DC Straße 1;666;Rockcity;1
-    public static ObservableList<User> load(String filename) {
-        ObservableList<User> result = FXCollections.observableArrayList();
-
-        String s = null;
-        BufferedReader br = null;
-
+    try {
+        br = new BufferedReader(new FileReader(filename));
         try {
-            br = new BufferedReader(new FileReader(filename));
-            try {
+            while ((s = br.readLine()) != null) {
                 while ((s = br.readLine()) != null) {
-                    while ((s = br.readLine()) != null) {
-                        // s enthält die gesamte Zeile
-                        s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                        User a = new User();
+                    // s enthält die gesamte Zeile
+                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
+                    User a = new User();
 
-                        String[] words = s.split(";");
-                        a.number = words[0];
-                        a.name = words[1];
-                        a.title = words[2];
-                        a.street = words[3];
-                        a.plz = words[4];
-                        a.ort = words[5];
-                        //a.country = words[6];
-                        //a.abteilungsnummer = words[7];
+                    String[] words = s.split(";");
+                    a.number = words[0];
+                    a.title = words[1];
+                    a.name = words[2];
+                    a.street = words[3];
+                    a.plz = words[4];
+                    a.ort = words[5];
+                    a.abteilung.number = words[7];
 
-                        return result;
+                    return result;
 
-                    }
                 }
-            } finally {
-                br.close();
             }
-        } catch (IOException io) {
+        } finally {
+            br.close();
         }
-        return result;
+    } catch (IOException io) {
     }
-
+    return result;
+}
     public static ObservableList<User> loadFile(String filename) {
         ObservableList<User> result = FXCollections.observableArrayList();
         try {
@@ -78,7 +73,6 @@ public class User {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
     }
 }
 

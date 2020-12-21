@@ -36,7 +36,7 @@ public class UsersController {
         list.remove(selected);
         userListView.refresh();
 
-        //fileWriter();
+        fileWriter();
     }
 
     public void saveclicked(ActionEvent actionEvent) {
@@ -131,4 +131,5 @@ public class UsersController {
         // beinhaltet
         this.selectedUser = null;
     }
+
 }

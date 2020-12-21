@@ -8,9 +8,18 @@ import javafx.scene.input.MouseEvent;
 import java.io.*;
 
 public class Priority {
-    public String number;
+    public int number;
     public String name;
     public Object id;
+
+    public Priority(int id, String name) {
+        number = id;
+        this.name = name;
+    }
+    public Priority(){
+       number = 0;
+       name = "";
+    }
 
     @Override
     public String toString() {
@@ -37,7 +46,7 @@ public class Priority {
                     Priority a = new Priority();
 
                     String[] words = s.split(";");
-                    a.number = words[0];
+                    a.number =Integer.getInteger(words[0]) ;
                     a.name = words[1];
 
                     result.add(a); // füge Artikel zur Liste hinzu
