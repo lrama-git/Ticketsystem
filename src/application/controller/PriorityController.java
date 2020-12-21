@@ -54,7 +54,7 @@ public class PriorityController {
             Priority a = new Priority();
 
             a.name = priorityTextfield.getText();
-            a.number = Integer.toString(number + 1);
+            a.number = (number + 1);
 
             list.add(a);
             // erzeuge neuen Artikel, füge ihn in die ListView ein
