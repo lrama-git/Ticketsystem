@@ -53,7 +53,7 @@
       <Label layoutX="222.0" layoutY="27.0" text="Priorität" AnchorPane.rightAnchor="335.6" AnchorPane.topAnchor="27.0" />
       <ComboBox fx:id="statiCombo" layoutX="53.0" layoutY="29.0" prefWidth="150.0" promptText="hier auswählen" AnchorPane.leftAnchor="52.99999999999997" AnchorPane.rightAnchor="396.6" AnchorPane.topAnchor="29.0" />
       <ComboBox fx:id="priorityCombo" layoutX="276.0" layoutY="29.0" prefWidth="150.0" promptText="hier auswählen" AnchorPane.rightAnchor="173.6" AnchorPane.topAnchor="29.0" />
-      <Button layoutX="14.0" layoutY="373.0" mnemonicParsing="false" onAction="#newTicketClicked" text="neu" AnchorPane.bottomAnchor="1.3999999999999986" AnchorPane.leftAnchor="14.0" />
+      <Button layoutX="14.0" layoutY="373.0" mnemonicParsing="false" onAction="#newTicketClicked" text="neu ." AnchorPane.bottomAnchor="1.3999999999999986" AnchorPane.leftAnchor="14.0" />
       <Button layoutX="71.0" layoutY="373.0" mnemonicParsing="false" onAction="#deleteClicked" text="löschen" AnchorPane.bottomAnchor="1.3999999999999773" AnchorPane.leftAnchor="71.00000000000001" />
       <Button layoutX="530.0" layoutY="373.0" mnemonicParsing="false" onAction="#saveClicked" text="speichern" AnchorPane.bottomAnchor="1.3999999999999986" AnchorPane.rightAnchor="2.799999999999997" />
    </children>
