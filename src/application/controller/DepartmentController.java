@@ -24,10 +24,6 @@ public class DepartmentController {
         departmentListView.setItems(Department.load("department.csv"));
     }
 
-    private void load() {
-
-    }
-
     public void deleClicked(ActionEvent actionEvent) {
         Department selected = departmentListView.getSelectionModel().getSelectedItem();
 
@@ -35,7 +31,6 @@ public class DepartmentController {
         departmentListView.refresh();
 
         Department.fileWriter(list);
-
     }
 
     public void saveClicked(ActionEvent actionEvent) {
@@ -50,9 +45,7 @@ public class DepartmentController {
             a.number = number + 1;
 
             list.add(a);
-
         }
-
         Department.fileWriter(list);
     }
 
@@ -71,6 +64,4 @@ public class DepartmentController {
             departmentTextfield.setText(selected.name);
         }
     }
-
-
 }

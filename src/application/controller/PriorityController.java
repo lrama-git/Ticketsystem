@@ -18,10 +18,8 @@ public class PriorityController {
 
     private Priority selectedPriority = null;
 
-
     public void initialize() {
         priorityListView.setItems(Priority.loadFile("priorities.csv"));
-
     }
 
     public void listclicked(MouseEvent mouseEvent) {
@@ -61,10 +59,8 @@ public class PriorityController {
             // erzeuge neuen Artikel, füge ihn in die ListView ein
             // und speichere alles in die Datei
         }
-
         Priority.fileWriter(list);
     }
-
 
     public void deleteClicked(ActionEvent actionEvent) {
         Priority selected = priorityListView.getSelectionModel().getSelectedItem();
@@ -74,5 +70,4 @@ public class PriorityController {
 
         Priority.fileWriter(list);
     }
-
 }

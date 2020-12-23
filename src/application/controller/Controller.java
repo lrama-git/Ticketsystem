@@ -28,6 +28,7 @@ public class Controller {
     public ComboBox<Priority> priorityCombo;
     private ArrayList<Ticket> allTickets;
     private ObservableList<Ticket> list;
+    ArrayList<Ticket> set = new ArrayList<>();
 
 
     private TicketController active = null;
@@ -46,9 +47,7 @@ public class Controller {
         priorityCombo.getSelectionModel().select(0);
 
         allTickets = new ArrayList<>(ticketListView.getItems());
-
     }
-
 
     public void editStaticlicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
@@ -94,11 +93,8 @@ public class Controller {
             AnchorPane.setLeftAnchor(root, 0.0);
             contentPane.getChildren().add(root);
 
-
             active = (TicketController) loader.getController();
             active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
-
-
         }
     }
 
@@ -107,8 +103,17 @@ public class Controller {
     }
 
     public void filterTyped(KeyEvent keyEvent) {
-        filterChanged(null);
+        list.clear();
+        for (Ticket a : set) {
+            if (a.description.contains(searchTextfield.getCharacters())) {
+                list.add(a);
+            } else if (a.name.contains(searchTextfield.getCharacters())) {
+                list.add(a);
+            }
+        }
+        ticketListView.setItems(list);
     }
+
 
     public void newTicketClicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
@@ -135,8 +140,6 @@ public class Controller {
         ticketListView.refresh();
 
         fileWriter();
-
-
     }
 
     private void fileWriter() {
@@ -180,8 +183,5 @@ public class Controller {
             ticketListView.refresh();
         }
         fileWriter();
-
-
     }
-
 }

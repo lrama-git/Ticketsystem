@@ -14,10 +14,6 @@ public class TicketController {
     public ComboBox<Priority> priorityCombo;
     private Ticket ticket = null;
 
-    /**
-     * darstellen der Daten des Tickets
-     */
-    //
     public void setTicket(Ticket t) {
         ticketNameTextfield.setText(t.name);
         descriptionTextfield.setText(t.description);
@@ -37,7 +33,6 @@ public class TicketController {
                 break;
             }
         }
-
     }
 
     public Ticket getTicket() {

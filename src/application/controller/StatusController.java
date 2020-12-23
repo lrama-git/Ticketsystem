@@ -25,11 +25,6 @@ public class StatusController {
         statiListView.setItems(Status.load("stati.csv"));
     }
 
-    private void load() {
-
-
-    }
-
     public void listclicked(MouseEvent mouseEvent) {
         Status selected = statiListView.getSelectionModel().getSelectedItem();
 
@@ -60,12 +55,9 @@ public class StatusController {
             a.number = number + 1;
 
             list.add(a);
-
         }
-
         Status.fileWriter(list);
     }
-
 
     public void deleteClicked(ActionEvent actionEvent) {
         Status selected = statiListView.getSelectionModel().getSelectedItem();

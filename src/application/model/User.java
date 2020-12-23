@@ -16,12 +16,15 @@ public class User {
     public Department abteilung;
 
     @Override
-    public String toString() { return number + " - " + title + name;}
+    public String toString() {
+        return number + " - " + title + name;
+    }
 
-    public String newCSVLine (){
-        return number + "\";\"" + title + "\";\""+ name + "\";\"" + street + "\";\"" +
+    public String newCSVLine() {
+        return number + "\";\"" + title + "\";\"" + name + "\";\"" + street + "\";\"" +
                 plz + "\";\"" + ort + "\";\"" + abteilung.number + "\";\"";
     }
+
     //3;Dipl-Ing.;Heinz Schweiger;AC/DC Straße 1;666;Rockcity;1
     public static ObservableList<User> load(String filename) {
         ObservableList<User> result = FXCollections.observableArrayList();
@@ -48,7 +51,6 @@ public class User {
                         a.abteilung = new Department(Integer.getInteger(words[6]), "");
 
                         return result;
-
                     }
                 }
             } finally {
@@ -58,7 +60,6 @@ public class User {
         }
         return result;
     }
-
 
     public static void fileWriter(ObservableList<User> listo) {
         ObservableList<User> result = FXCollections.observableArrayList();
@@ -76,8 +77,6 @@ public class User {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }
 
