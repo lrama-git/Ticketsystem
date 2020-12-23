@@ -33,16 +33,16 @@ public class Controller {
     private TicketController active = null;
     private Ticket selectedTicket = null;
 
-    public void initialize() {
+    public void initialize(){
         ticketListView.setItems(Ticket.loadFile("tickets.csv"));
 
-        ObservableList<Status> statuslist = Status.load("stati.csv");
-        statuslist.add(0, new Status(-1, "Filter wählen"));
+        ObservableList<Status> statuslist  = Status.load("stati.csv");
+        statuslist.add(0, new Status(-1,"Filter wählen"));
         statiCombo.setItems(statuslist);
         statiCombo.getSelectionModel().select(0);
 
         ObservableList<Priority> priorityList = Priority.loadFile("priorities.csv");
-        priorityList.add(0, new Priority(-1, "Filter wählen"));
+        priorityList.add(0,new Priority(-1,"Filter wählen"));
         priorityCombo.getSelectionModel().select(0);
 
         allTickets = new ArrayList<>(ticketListView.getItems());
@@ -57,7 +57,7 @@ public class Controller {
 
     public void editPrioritiesclicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
-        loader.loadFXML("view/priorities.fxml", "Prioritäten bearbeiten");
+        loader.loadFXML("view/priorities.fxml" , "Prioritäten bearbeiten");
     }
 
     public void editDepartmentClicked(ActionEvent actionEvent) {
@@ -85,29 +85,29 @@ public class Controller {
          *         active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
          */
 
-        if (ticketListView.getSelectionModel().getSelectedItem() != null) {
+        if(ticketListView.getSelectionModel().getSelectedItem() != null){
             MyFXMLLoader loader = new MyFXMLLoader();
             Parent root = loader.loadFXML("view/ticket.fxml");
-            AnchorPane.setBottomAnchor(root, 0.0);
-            AnchorPane.setRightAnchor(root, 0.0);
-            AnchorPane.setTopAnchor(root, 0.0);
-            AnchorPane.setLeftAnchor(root, 0.0);
+            AnchorPane.setBottomAnchor(root,0.0);
+            AnchorPane.setRightAnchor(root,0.0);
+            AnchorPane.setTopAnchor(root,0.0);
+            AnchorPane.setLeftAnchor(root,0.0);
             contentPane.getChildren().add(root);
 
 
-            TicketController controller = (TicketController) loader.getController();
-            controller.setTicket(ticketListView.getSelectionModel().getSelectedItem());
+            active = (TicketController) loader.getController();
+            active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
 
 
         }
     }
 
-    public void filterChanged() {
+    public void filterChanged(){
 
     }
 
     public void filterTyped(KeyEvent keyEvent) {
-        filterChanged();
+        filterChanged(null);
     }
 
     public void newTicketClicked(ActionEvent actionEvent) {
@@ -138,7 +138,6 @@ public class Controller {
 
 
     }
-
     private void fileWriter() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("tickets.csv"));
@@ -153,43 +152,38 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //funktioniert das?
     }
 
     public void saveClicked(ActionEvent actionEvent) {
-        /**
-         * Wenn Ticket neu -> laden des Tickets und hinzufügen zur Liste!!
-         * Datei  aktualisieren
 
+        Ticket ticket = active.getTicket();
 
-         if (this.selectedTicket != null) {
-         // Aktualisiere die Artikeldaten
-         // (übernimm die aktuellen Daten von den Textfeldern)
-         // und speichere alles in die Datei
+        if(this.selectedTicket != null){
 
-         selectedTicket.artikelNummer = articleNumberTextField.getText();
-         selectedTicket.name = articleNameTextField.getText();
-         selectedTicket.lagerplatz = articleDepotTextField.getText();
-         selectedTicket.preis = Double.parseDouble(articlePriceTextField.getText());
+            //selectedTicket.nummer = ----FileReader-> letzte nummer-> +1
+            selectedTicket.name = ticket.name;
+            selectedTicket.status = ticket.status;
+            selectedTicket.priority = ticket.priority;
+            selectedTicket.description = ticket.description;
 
-         articleList.refresh();
-         } else {
-         Artikel a = new Artikel();
+            ticketListView.refresh();
+        } else {
+            Ticket a = new Ticket();
+            a = active.getTicket();
+            a.nummer = list.size()+1; //die letzte Zahl(index +1)
 
-         a.artikelNummer = articleNumberTextField.getText();
-         a.name = articleNameTextField.getText();
-         a.lagerplatz = articleDepotTextField.getText();
-         a.preis = Double.parseDouble(articlePriceTextField.getText());
+            list.add(a);
+            //ich muss doch trotzdem ListView auch refreshen?
 
-         list.add(a);
-         // erzeuge neuen Artikel, füge ihn in die ListView ein
-         // und speichere alles in die Datei
-         }
+            ticketListView.refresh();
+        }
+        fileWriter();
 
-         fileWriter();
-         */
 
     }
+
+
 
 
 //wichtig über git arbeite, gleich blauen pfeil drücken
