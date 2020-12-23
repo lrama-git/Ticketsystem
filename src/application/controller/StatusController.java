@@ -57,30 +57,15 @@ public class StatusController {
             Status a = new Status();
 
             a.name = statiTextField.getText();
-            a.number = Integer.toString(number + 1);
+            a.number = number + 1;
 
             list.add(a);
 
         }
 
-        fileWriter();
+        Status.fileWriter(list);
     }
 
-    private void fileWriter() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
-
-            for (Status a : list) {
-                bw.write(a.newCSVLine());
-
-            }
-            bw.flush();
-            bw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void deleteClicked(ActionEvent actionEvent) {
         Status selected = statiListView.getSelectionModel().getSelectedItem();
@@ -88,6 +73,6 @@ public class StatusController {
         list.remove(selected);
         statiListView.refresh();
 
-        fileWriter();
+        Status.fileWriter(list);
     }
 }

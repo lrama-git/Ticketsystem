@@ -27,7 +27,7 @@ public class UsersController {
     private User selectedUser = null;
 
     public void initialize() {
-        userListView.setItems(User.loadFile("users.csv"));
+        userListView.setItems(User.load("users.csv"));
     }
 
     public void deleteclicked(ActionEvent actionEvent) {
@@ -36,7 +36,7 @@ public class UsersController {
         list.remove(selected);
         userListView.refresh();
 
-        fileWriter();
+        User.fileWriter(list);
     }
 
     public void saveclicked(ActionEvent actionEvent) {
@@ -73,21 +73,22 @@ public class UsersController {
         //fileWriter();
     }
 
-    /** private void fileWriter() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
-
-            for (User a : list) {
-                bw.write(a.newCSVLine());
-
-            }
-            bw.flush();
-            bw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    /**
+     * private void fileWriter() {
+     * try {
+     * BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
+     * <p>
+     * for (User a : list) {
+     * bw.write(a.newCSVLine());
+     * <p>
+     * }
+     * bw.flush();
+     * bw.close();
+     * <p>
+     * } catch (IOException e) {
+     * e.printStackTrace();
+     * }
+     * }
      */
 
     public void userClicked(MouseEvent mouseEvent) {

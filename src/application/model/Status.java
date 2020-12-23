@@ -4,15 +4,11 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class Status {
     public int number;
     public String name;
-    public Object id;
 
     public Status(int id, String name) {
         this.number = id;
@@ -65,6 +61,23 @@ public class Status {
         }
 
         return result;
+    }
+    public static void fileWriter(ObservableList<Status> listo) {
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
+
+            for (Status a : listo) {
+                bw.write(a.newCSVLine());
+
+            }
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

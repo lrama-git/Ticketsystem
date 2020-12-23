@@ -6,8 +6,17 @@ import javafx.collections.ObservableList;
 import java.io.*;
 
 public class Department {
-    public String number;
+    public int number;
     public String name;
+
+    public Department(int id, String name){
+        number = id;
+        this.name = name;
+    }
+    public Department(){
+        number = 0;
+        name ="";
+    }
 
     @Override
     public String toString() {
@@ -33,7 +42,7 @@ public class Department {
                     Department a = new Department();
 
                     String[] words = s.split(";");
-                    a.number = words[0];
+                    a.number = Integer.getInteger(words[0]);
                     a.name = words[1];
 
 
@@ -48,14 +57,12 @@ public class Department {
         return result;
     }
 
-    public static ObservableList<Department> writer(String filename) {
-        ObservableList<Department> result = FXCollections.observableArrayList();
-        //ObservableList<Department> list = FXCollections.observableArrayList();
+    public static void fileWriter(ObservableList<Department> listo) {
 
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
 
-            for (Department a : result) {
+            for (Department a : listo) {
                 bw.write(a.newCSVLine());
 
             }
@@ -65,7 +72,7 @@ public class Department {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+
     }
 
 }

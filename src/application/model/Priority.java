@@ -10,15 +10,14 @@ import java.io.*;
 public class Priority {
     public int number;
     public String name;
-    public Object id;
 
     public Priority(int id, String name) {
         number = id;
         this.name = name;
     }
     public Priority(){
-       number = 0;
-       name = "";
+        number = 0;
+        name = "";
     }
 
     @Override
@@ -57,6 +56,23 @@ public class Priority {
         } catch (IOException io) {
         }
         return result;
+    }
+    public static void fileWriter(ObservableList<Priority> listo) {
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("priority.csv"));
+
+            for (Priority a : listo) {
+                bw.write(a.newCSVLine());
+
+            }
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 

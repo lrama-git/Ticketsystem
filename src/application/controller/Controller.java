@@ -6,7 +6,6 @@ import application.model.Status;
 import application.model.Ticket;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -15,6 +14,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Controller {
@@ -22,23 +24,26 @@ public class Controller {
     public ListView<Ticket> ticketListView;
     public AnchorPane contentPane;
     public TextField searchTextfield;
-    public ComboBox<Status> filterstatiCombo;
-    public ComboBox<Priority> filterpriorityCombo;
+    public ComboBox<Status> statiCombo;
+    public ComboBox<Priority> priorityCombo;
     private ArrayList<Ticket> allTickets;
+    private ObservableList<Ticket> list;
+
 
     private TicketController active = null;
+    private Ticket selectedTicket = null;
 
-    public void initialize(){
+    public void initialize() {
         ticketListView.setItems(Ticket.loadFile("tickets.csv"));
 
-        ObservableList<Status> statuslist  = Status.load("stati.csv");
-        statuslist.add(0, new Status(-1,"Filter wählen"));
-        filterstatiCombo.setItems(statuslist);
-        filterstatiCombo.getSelectionModel().select(0);
+        ObservableList<Status> statuslist = Status.load("stati.csv");
+        statuslist.add(0, new Status(-1, "Filter wählen"));
+        statiCombo.setItems(statuslist);
+        statiCombo.getSelectionModel().select(0);
 
         ObservableList<Priority> priorityList = Priority.loadFile("priorities.csv");
-        priorityList.add(0,new Priority(-1,"Filter wählen"));
-        filterpriorityCombo.getSelectionModel().select(0);
+        priorityList.add(0, new Priority(-1, "Filter wählen"));
+        priorityCombo.getSelectionModel().select(0);
 
         allTickets = new ArrayList<>(ticketListView.getItems());
 
@@ -52,7 +57,7 @@ public class Controller {
 
     public void editPrioritiesclicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
-        loader.loadFXML("view/priorities.fxml" , "Prioritäten bearbeiten");
+        loader.loadFXML("view/priorities.fxml", "Prioritäten bearbeiten");
     }
 
     public void editDepartmentClicked(ActionEvent actionEvent) {
@@ -67,6 +72,8 @@ public class Controller {
 
     public void ticketListViewClicked(MouseEvent mouseEvent) {
 
+        Ticket selected = ticketListView.getSelectionModel().getSelectedItem();
+        this.selectedTicket = selected;
         /**
          * //wenn ich links drücke möchte ich rechts ticket anzeigen
          *         MyFXMLLoader loader = new MyFXMLLoader();
@@ -78,28 +85,29 @@ public class Controller {
          *         active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
          */
 
-        if(ticketListView.getSelectionModel().getSelectedItem() != null){
+        if (ticketListView.getSelectionModel().getSelectedItem() != null) {
             MyFXMLLoader loader = new MyFXMLLoader();
             Parent root = loader.loadFXML("view/ticket.fxml");
-            AnchorPane.setBottomAnchor(root,0.0);
-            AnchorPane.setRightAnchor(root,0.0);
-            AnchorPane.setTopAnchor(root,0.0);
-            AnchorPane.setLeftAnchor(root,0.0);
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
             contentPane.getChildren().add(root);
 
 
             TicketController controller = (TicketController) loader.getController();
             controller.setTicket(ticketListView.getSelectionModel().getSelectedItem());
 
+
         }
     }
 
-    public void filterChanged(){
+    public void filterChanged() {
 
     }
 
     public void filterTyped(KeyEvent keyEvent) {
-        filterChanged(null);
+        filterChanged();
     }
 
     public void newTicketClicked(ActionEvent actionEvent) {
@@ -121,16 +129,67 @@ public class Controller {
          * entfernen aus Listview
          * Datei aktualisieren
          */
+        Ticket selected = ticketListView.getSelectionModel().getSelectedItem();
+
+        list.remove(selected);
+        ticketListView.refresh();
+
+        fileWriter();
+
+
+    }
+
+    private void fileWriter() {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("tickets.csv"));
+
+            for (Ticket a : list) {
+                bw.write(a.newCSVLine());
+
+            }
+            bw.flush();
+            bw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void saveClicked(ActionEvent actionEvent) {
         /**
          * Wenn Ticket neu -> laden des Tickets und hinzufügen zur Liste!!
          * Datei  aktualisieren
+
+
+         if (this.selectedTicket != null) {
+         // Aktualisiere die Artikeldaten
+         // (übernimm die aktuellen Daten von den Textfeldern)
+         // und speichere alles in die Datei
+
+         selectedTicket.artikelNummer = articleNumberTextField.getText();
+         selectedTicket.name = articleNameTextField.getText();
+         selectedTicket.lagerplatz = articleDepotTextField.getText();
+         selectedTicket.preis = Double.parseDouble(articlePriceTextField.getText());
+
+         articleList.refresh();
+         } else {
+         Artikel a = new Artikel();
+
+         a.artikelNummer = articleNumberTextField.getText();
+         a.name = articleNameTextField.getText();
+         a.lagerplatz = articleDepotTextField.getText();
+         a.preis = Double.parseDouble(articlePriceTextField.getText());
+
+         list.add(a);
+         // erzeuge neuen Artikel, füge ihn in die ListView ein
+         // und speichere alles in die Datei
+         }
+
+         fileWriter();
          */
+
     }
-
-
 
 
 //wichtig über git arbeite, gleich blauen pfeil drücken

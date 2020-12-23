@@ -34,7 +34,7 @@ public class DepartmentController {
         list.remove(selected);
         departmentListView.refresh();
 
-        fileWriter();
+        Department.fileWriter(list);
 
     }
 
@@ -47,13 +47,13 @@ public class DepartmentController {
             Department a = new Department();
 
             a.name = departmentTextfield.getText();
-            a.number = Integer.toString(number + 1);
+            a.number = number + 1;
 
             list.add(a);
 
         }
 
-        fileWriter();//
+        Department.fileWriter(list);
     }
 
     public void newClicked(ActionEvent actionEvent) {
@@ -72,19 +72,5 @@ public class DepartmentController {
         }
     }
 
-    private void fileWriter() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
 
-            for (Department a : list) {
-                bw.write(a.newCSVLine());
-
-            }
-            bw.flush();
-            bw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

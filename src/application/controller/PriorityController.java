@@ -23,6 +23,7 @@ public class PriorityController {
         priorityListView.setItems(Priority.loadFile("priorities.csv"));
 
     }
+
     public void listclicked(MouseEvent mouseEvent) {
         Priority selected = priorityListView.getSelectionModel().getSelectedItem();
 
@@ -61,24 +62,9 @@ public class PriorityController {
             // und speichere alles in die Datei
         }
 
-        fileWriter();
+        Priority.fileWriter(list);
     }
 
-    private void fileWriter() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("priorities.csv"));
-
-            for (Priority a : list) {
-                bw.write(a.newCSVLine());
-
-            }
-            bw.flush();
-            bw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void deleteClicked(ActionEvent actionEvent) {
         Priority selected = priorityListView.getSelectionModel().getSelectedItem();
@@ -86,7 +72,7 @@ public class PriorityController {
         list.remove(selected);
         priorityListView.refresh();
 
-        fileWriter();
+        Priority.fileWriter(list);
     }
 
 }

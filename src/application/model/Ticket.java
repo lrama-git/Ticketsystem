@@ -8,15 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Ticket {
-    //das is Person? kein Ticket
-    /**public String number;
-    public String name;
-    public String title;
-    public String street;
-    public String plz;
-    public String ort;
-    public String abteilungsnummer;
-     */
     public int nummer;
     public String name;
     public String description;
@@ -37,12 +28,14 @@ public class Ticket {
         priority = null;
     }
 
-  //  1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+    //  1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
 
-
+    @Override
     public String toString() {
         return nummer + " - " + name ;
     }
+
+
     public static ObservableList<Ticket> loadFile(String filename) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();
 
@@ -64,8 +57,9 @@ public class Ticket {
                         a.nummer = Integer.getInteger(words[0]);
                         a.name = words[1];
                         a.description = words[2];
-                        a.status.number = words[3];
-                        a.priority.number = words[4];
+                        a.status = new Status(Integer.getInteger(words[3]), "");
+                        a.priority = new Priority(Integer.getInteger(words[4]), "");
+
 
                         return result;
 
