@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.Department;
 import application.model.Priority;
 import application.model.User;
 import javafx.collections.FXCollections;
@@ -20,7 +21,7 @@ public class UsersController {
     public TextField plz;
     public TextField ort;
     public TextField country;
-    public ComboBox abteilung;
+    public ComboBox<Department> abteilung;
     ObservableList<User> list = FXCollections.observableArrayList();
     private int number = 0;
 
@@ -50,6 +51,7 @@ public class UsersController {
             selectedUser.ort = ort.getText();
             selectedUser.plz = plz.getText();
             selectedUser.street = street.getText();
+            selectedUser.abteilung = abteilung.getSelectionModel().getSelectedItem();
             // selectedUser.abteilungsnummer = abteilung.getText();??????????????????????????????????????????????????
 
 
@@ -62,6 +64,7 @@ public class UsersController {
             selectedUser.ort = ort.getText();
             selectedUser.plz = plz.getText();
             selectedUser.street = street.getText();
+            selectedUser.abteilung = abteilung.getSelectionModel().getSelectedItem();
             // selectedUser.abteilungsnummer = abteilung.getText();??????????????????????????????????????????????????
             a.number = Integer.toString(number + 1);
 
@@ -74,21 +77,22 @@ public class UsersController {
     }
 
     /**
+     * ---------------------------------------------------------------ist in user-------------------------------------
      * private void fileWriter() {
-     * try {
-     * BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
-     * <p>
-     * for (User a : list) {
-     * bw.write(a.newCSVLine());
-     * <p>
-     * }
-     * bw.flush();
-     * bw.close();
-     * <p>
-     * } catch (IOException e) {
-     * e.printStackTrace();
-     * }
-     * }
+     try {
+     BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
+
+     for (User a : list) {
+     bw.write(a.newCSVLine());
+
+     }
+     bw.flush();
+     bw.close();
+
+     } catch (IOException e) {
+     e.printStackTrace();
+     }
+     }
      */
 
     public void userClicked(MouseEvent mouseEvent) {
@@ -111,7 +115,7 @@ public class UsersController {
              *     public TextField plz;
              *     public TextField ort;
              *     public TextField country;
-             *     public ComboBox abteilung;
+             *     public ComboBox<Department> abteilung;
              */
         }
     }
@@ -126,9 +130,9 @@ public class UsersController {
         plz.clear();
         ort.clear();
         country.clear();
-        //??????????????abteilung.se
+        abteilung.setItems(null);//glaub ich zumindest, kann auch was anderes sein?
 
-        // lösche die Variable, die den gewählten Artikel
+        // lösche die Variable, die den gewählten User
         // beinhaltet
         this.selectedUser = null;
     }

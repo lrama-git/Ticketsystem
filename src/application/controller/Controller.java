@@ -33,16 +33,16 @@ public class Controller {
     private TicketController active = null;
     private Ticket selectedTicket = null;
 
-    public void initialize(){
+    public void initialize() {
         ticketListView.setItems(Ticket.loadFile("tickets.csv"));
 
-        ObservableList<Status> statuslist  = Status.load("stati.csv");
-        statuslist.add(0, new Status(-1,"Filter wählen"));
+        ObservableList<Status> statuslist = Status.load("stati.csv");
+        statuslist.add(0, new Status(-1, "Filter wählen"));
         statiCombo.setItems(statuslist);
         statiCombo.getSelectionModel().select(0);
 
         ObservableList<Priority> priorityList = Priority.loadFile("priorities.csv");
-        priorityList.add(0,new Priority(-1,"Filter wählen"));
+        priorityList.add(0, new Priority(-1, "Filter wählen"));
         priorityCombo.getSelectionModel().select(0);
 
         allTickets = new ArrayList<>(ticketListView.getItems());
@@ -57,7 +57,7 @@ public class Controller {
 
     public void editPrioritiesclicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
-        loader.loadFXML("view/priorities.fxml" , "Prioritäten bearbeiten");
+        loader.loadFXML("view/priorities.fxml", "Prioritäten bearbeiten");
     }
 
     public void editDepartmentClicked(ActionEvent actionEvent) {
@@ -85,13 +85,13 @@ public class Controller {
          *         active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
          */
 
-        if(ticketListView.getSelectionModel().getSelectedItem() != null){
+        if (ticketListView.getSelectionModel().getSelectedItem() != null) {
             MyFXMLLoader loader = new MyFXMLLoader();
             Parent root = loader.loadFXML("view/ticket.fxml");
-            AnchorPane.setBottomAnchor(root,0.0);
-            AnchorPane.setRightAnchor(root,0.0);
-            AnchorPane.setTopAnchor(root,0.0);
-            AnchorPane.setLeftAnchor(root,0.0);
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
             contentPane.getChildren().add(root);
 
 
@@ -102,7 +102,7 @@ public class Controller {
         }
     }
 
-    public void filterChanged(){
+    public void filterChanged() {
 
     }
 
@@ -138,6 +138,7 @@ public class Controller {
 
 
     }
+
     private void fileWriter() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("tickets.csv"));
@@ -159,7 +160,7 @@ public class Controller {
 
         Ticket ticket = active.getTicket();
 
-        if(this.selectedTicket != null){
+        if (this.selectedTicket != null) {
 
             //selectedTicket.nummer = ----FileReader-> letzte nummer-> +1
             selectedTicket.name = ticket.name;
@@ -171,7 +172,7 @@ public class Controller {
         } else {
             Ticket a = new Ticket();
             a = active.getTicket();
-            a.nummer = list.size()+1; //die letzte Zahl(index +1)
+            a.nummer = list.size() + 1; //die letzte Zahl(index +1)
 
             list.add(a);
             //ich muss doch trotzdem ListView auch refreshen?
@@ -183,8 +184,4 @@ public class Controller {
 
     }
 
-
-
-
-//wichtig über git arbeite, gleich blauen pfeil drücken
 }
