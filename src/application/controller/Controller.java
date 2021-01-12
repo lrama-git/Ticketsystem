@@ -34,20 +34,22 @@ public class Controller {
     private TicketController active = null;
     private Ticket selectedTicket = null;
 
-    public void initialize() {
+    public void initialize(){
         ticketListView.setItems(Ticket.loadFile("tickets.csv"));
 
-        ObservableList<Status> statuslist = Status.load("stati.csv");
-        statuslist.add(0, new Status(-1, "Filter wählen"));
+        ObservableList<Status> statuslist  = Status.load("stati.csv");
+        statuslist.add(0, new Status(-1,"Filter wählen"));
         statiCombo.setItems(statuslist);
         statiCombo.getSelectionModel().select(0);
 
-        ObservableList<Priority> priorityList = Priority.loadFile("priorities.csv");
-        priorityList.add(0, new Priority(-1, "Filter wählen"));
+        ObservableList<Priority> priorityList = Priority.loadList();
+        priorityList.add(0,new Priority(-1,"Filter wählen"));
         priorityCombo.getSelectionModel().select(0);
 
         allTickets = new ArrayList<>(ticketListView.getItems());
+
     }
+
 
     public void editStaticlicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
@@ -56,7 +58,7 @@ public class Controller {
 
     public void editPrioritiesclicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
-        loader.loadFXML("view/priorities.fxml", "Prioritäten bearbeiten");
+        loader.loadFXML("view/priorities.fxml" , "Prioritäten bearbeiten");
     }
 
     public void editDepartmentClicked(ActionEvent actionEvent) {
@@ -84,36 +86,78 @@ public class Controller {
          *         active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
          */
 
-        if (ticketListView.getSelectionModel().getSelectedItem() != null) {
+        if(ticketListView.getSelectionModel().getSelectedItem() != null){
             MyFXMLLoader loader = new MyFXMLLoader();
             Parent root = loader.loadFXML("view/ticket.fxml");
-            AnchorPane.setBottomAnchor(root, 0.0);
-            AnchorPane.setRightAnchor(root, 0.0);
-            AnchorPane.setTopAnchor(root, 0.0);
-            AnchorPane.setLeftAnchor(root, 0.0);
+            AnchorPane.setBottomAnchor(root,0.0);
+            AnchorPane.setRightAnchor(root,0.0);
+            AnchorPane.setTopAnchor(root,0.0);
+            AnchorPane.setLeftAnchor(root,0.0);
             contentPane.getChildren().add(root);
+
 
             active = (TicketController) loader.getController();
             active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
+
+
         }
     }
 
-    public void filterChanged() {
-
-    }
 
     public void filterTyped(KeyEvent keyEvent) {
+
+        /**
+         * why am I doing this this complicated??? no one knows...
+         */
+
         list.clear();
         for (Ticket a : set) {
-            if (a.description.contains(searchTextfield.getCharacters())) {
+            if (a.name.contains(searchTextfield.getCharacters())) {
+                if(priorityCombo.getSelectionModel().getSelectedItem() != null){
+                    if(a.name.contains(searchTextfield.getCharacters()) && (a.priority == priorityCombo.getSelectionModel().getSelectedItem())){
+                        //filter nach name + priority
+                        list.add(a);
+                        if(statiCombo.getSelectionModel().getSelectedItem() != null){
+                            if(a.name.contains(searchTextfield.getCharacters()) &&
+                                    (a.priority == priorityCombo.getSelectionModel().getSelectedItem()) &&
+                                    (a.status == statiCombo.getSelectionModel().getSelectedItem())) {
+                                //filter nach name + priority +stati
+                                list.add(a);
+                            }
+                        }
+                    }
+                }
+                if(statiCombo.getSelectionModel().getSelectedItem() != null){
+                    if(a.name.contains(searchTextfield.getCharacters()) &&
+                            (a.status == statiCombo.getSelectionModel().getSelectedItem())) {
+                        //filter nach name + stati
+                        list.add(a);
+                    }
+                }
                 list.add(a);
-            } else if (a.name.contains(searchTextfield.getCharacters())) {
-                list.add(a);
+                //filter nach name
+            }
+            if(statiCombo.getSelectionModel().getSelectedItem() != null){
+                if((a.status == statiCombo.getSelectionModel().getSelectedItem())) {
+                    //filter nach stati
+                    list.add(a);
+                    if(priorityCombo.getSelectionModel().getSelectedItem() != null){
+                        if((a.priority == priorityCombo.getSelectionModel().getSelectedItem())) {
+                            //filter nach stati + priority
+                            list.add(a);
+                        }
+                    }
+                }
+            }
+            if(priorityCombo.getSelectionModel().getSelectedItem() != null){
+                if((a.priority == priorityCombo.getSelectionModel().getSelectedItem())) {
+                    //filter nach priority
+                    list.add(a);
+                }
             }
         }
         ticketListView.setItems(list);
     }
-
 
     public void newTicketClicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
@@ -140,8 +184,9 @@ public class Controller {
         ticketListView.refresh();
 
         fileWriter();
-    }
 
+
+    }
     private void fileWriter() {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("tickets.csv"));
@@ -163,7 +208,7 @@ public class Controller {
 
         Ticket ticket = active.getTicket();
 
-        if (this.selectedTicket != null) {
+        if(this.selectedTicket != null){
 
             //selectedTicket.nummer = ----FileReader-> letzte nummer-> +1
             selectedTicket.name = ticket.name;
@@ -175,7 +220,7 @@ public class Controller {
         } else {
             Ticket a = new Ticket();
             a = active.getTicket();
-            a.nummer = list.size() + 1; //die letzte Zahl(index +1)
+            a.nummer = list.size()+1; //die letzte Zahl(index +1)
 
             list.add(a);
             //ich muss doch trotzdem ListView auch refreshen?
@@ -183,5 +228,6 @@ public class Controller {
             ticketListView.refresh();
         }
         fileWriter();
+
     }
 }

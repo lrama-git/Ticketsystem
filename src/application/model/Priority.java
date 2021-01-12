@@ -6,6 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Priority {
     public int number;
@@ -15,7 +19,8 @@ public class Priority {
         number = id;
         this.name = name;
     }
-    public Priority(){
+
+    public Priority() {
         number = 0;
         name = "";
     }
@@ -27,6 +32,29 @@ public class Priority {
 
     public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
+    }
+
+    public static ObservableList<Priority> loadList() {
+        ObservableList<Priority> list = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM priorities");
+
+            while (result.next()) {
+                Priority p = new Priority(result.getInt("priority_id"), result.getString("name"));
+                //Priority p = new Priority();
+                //p.number = result.getString("priority_id");
+                //p.name = result.getString("name");
+                list.add(p);
+            }
+        } catch (SQLException throwables) {
+
+        }
+        return list;
     }
 
 
@@ -45,7 +73,7 @@ public class Priority {
                     Priority a = new Priority();
 
                     String[] words = s.split(";");
-                    a.number =Integer.getInteger(words[0]) ;
+                    a.number = Integer.getInteger(words[0]);
                     a.name = words[1];
 
                     result.add(a); // füge Artikel zur Liste hinzu
@@ -57,6 +85,7 @@ public class Priority {
         }
         return result;
     }
+
     public static void fileWriter(ObservableList<Priority> listo) {
 
         try {
@@ -73,6 +102,9 @@ public class Priority {
             e.printStackTrace();
         }
 
+    }
+
+    public void test() {
     }
 
 

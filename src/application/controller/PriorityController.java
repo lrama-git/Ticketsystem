@@ -19,7 +19,7 @@ public class PriorityController {
     private Priority selectedPriority = null;
 
     public void initialize() {
-        priorityListView.setItems(Priority.loadFile("priorities.csv"));
+        priorityListView.setItems(Priority.loadList());
     }
 
     public void listclicked(MouseEvent mouseEvent) {
