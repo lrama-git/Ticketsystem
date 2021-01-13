@@ -22,7 +22,7 @@ public class StatusController {
     private Status selectedStati = null;
 
     public void initialize() {
-        statiListView.setItems(Status.load("stati.csv"));
+        statiListView.setItems(Status.loadList();
     }
 
     public void listclicked(MouseEvent mouseEvent) {

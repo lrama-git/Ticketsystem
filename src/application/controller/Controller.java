@@ -37,7 +37,7 @@ public class Controller {
     public void initialize(){
         ticketListView.setItems(Ticket.loadFile("tickets.csv"));
 
-        ObservableList<Status> statuslist  = Status.load("stati.csv");
+        ObservableList<Status> statuslist  = Status.loadList();
         statuslist.add(0, new Status(-1,"Filter wählen"));
         statiCombo.setItems(statuslist);
         statiCombo.getSelectionModel().select(0);

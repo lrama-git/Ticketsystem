@@ -17,7 +17,7 @@ public class TicketController {
     public void setTicket(Ticket t) {
         ticketNameTextfield.setText(t.name);
         descriptionTextfield.setText(t.description);
-        statiCombo.setItems(Status.load("stati.csv"));
+        statiCombo.setItems(Status.loadList());
         priorityCombo.setItems(Priority.loadList());
 
         for (Status s : statiCombo.getItems()) {
