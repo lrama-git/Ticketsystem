@@ -12,18 +12,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Priority {
-    public int number;
+   // public int id;
     public String name;
+    public String number;
 
-    public Priority(int id, String name) {
-        number = id;
-        this.name = name;
-    }
+    //public Priority(int id, String name) {
+      //  this.number = id;
+    //    this.name = name;
+  //  }
 
-    public Priority() {
-        number = 0;
-        name = "";
-    }
+    //public Priority() {
+      //  number = 0;
+        //name = "";
+    //}
 
     @Override
     public String toString() {
@@ -38,17 +39,19 @@ public class Priority {
         ObservableList<Priority> list = FXCollections.observableArrayList();
 
         try {
-            Connection connection = AccessDb.getConnection();
+            Connection connection = AccessDb.getConnection();//hole datenbank connection
 
             Statement statement = null;
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM priorities");
+            ResultSet result = statement.executeQuery("SELECT * FROM priorities");//alle date von tabelle von priorities
 
             while (result.next()) {
-                Priority p = new Priority(result.getInt("priority_id"), result.getString("name"));
-                //Priority p = new Priority();
-                //p.number = result.getString("priority_id");
-                //p.name = result.getString("name");
+               // Priority p = new Priority(result.getInt("priority_id"), result.getString("name"));
+                //lade ich zwei felder (name, priority_id) und erzeuge ein objekt priority
+                Priority p = new Priority();
+                p.number = result.getString("priority_id");
+                p.name = result.getString("name");
+
                 list.add(p);
             }
         } catch (SQLException throwables) {
@@ -56,9 +59,9 @@ public class Priority {
         }
         return list;
     }
+}
 
-
-    public static ObservableList<Priority> loadFile(String filename) {
+   /**public static ObservableList<Priority> loadFile(String filename) {
         ObservableList<Priority> result = FXCollections.observableArrayList();
 
         String s = null;
@@ -109,3 +112,4 @@ public class Priority {
 
 
 }
+    */

@@ -11,31 +11,31 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Status {
-    public int number;
+    public int id;
     public String name;
+    public String number;
 
-    public Status(int id, String name) {
-        this.number = id;
-        this.name = name;
+    //public Status(int id, String name) {
+    // this.number = id;
+    //  this.name = name;
 
-    }
-    public Status(){
-        number = 0;
-        name = "";
-    }
+    //}
+    //public Status(){
+    // number = 0;
+    //name = "";
+    //}
 
 
     @Override
     public String toString() {
-        return number + " - " +  name;
-
+        return number + " - " + name;
     }
 
-    public String newCSVLine (){
+    public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
     }
 
-    public static ObservableList<Priority> loadList() {
+    public static ObservableList<Status> loadList() {
         ObservableList<Status> list = FXCollections.observableArrayList();
 
         try {
@@ -46,10 +46,10 @@ public class Status {
             ResultSet result = statement.executeQuery("SELECT * FROM stati");
 
             while (result.next()) {
-                Status s = new Status(result.getInt("status_id"), result.getString("name"));
-                //Priority p = new Priority();
-                //p.number = result.getString("priority_id");
-                //p.name = result.getString("name");
+                // Status s = new Status(result.getInt("status_id"), result.getString("name"));
+                Status s = new Status();
+                s.number = result.getString("priority_id");
+                s.name = result.getString("name");
                 list.add(s);
             }
         } catch (SQLException throwables) {
@@ -57,7 +57,8 @@ public class Status {
         }
         return list;
     }
-
+}
+/**
     public static ObservableList<Status> load(String filename) {
         ObservableList<Status> result = FXCollections.observableArrayList();
 
@@ -107,3 +108,4 @@ public class Status {
     }
 
 }
+ */

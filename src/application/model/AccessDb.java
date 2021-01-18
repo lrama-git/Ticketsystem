@@ -22,7 +22,8 @@ public class AccessDb {
         //in allen
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection("jdbc:ucanaccess://D:/Ticketsystem_Rama.accdb");
+                //erzeuge eine neue verbindung zur datenbank
+                connection = DriverManager.getConnection("jdbc:ucanaccess://db/Ticketsystem_Rama.accdb");
             } catch (SQLException throwables) {
 
             }
