@@ -1,7 +1,7 @@
 package application.controller;
 
 import application.model.Department;
-import application.model.Priority;
+
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +28,7 @@ public class UsersController {
     private User selectedUser = null;
 
     public void initialize() {
-        userListView.setItems(User.load("users.csv"));
+        userListView.setItems(User.load());
     }
 
     public void deleteclicked(ActionEvent actionEvent) {
@@ -51,7 +51,7 @@ public class UsersController {
             selectedUser.ort = ort.getText();
             selectedUser.plz = plz.getText();
             selectedUser.street = street.getText();
-            selectedUser.abteilung = abteilung.getSelectionModel().getSelectedItem();
+            //selectedUser.abteilung = abteilung.getSelectionModel().getSelectedItem();
             // selectedUser.abteilungsnummer = abteilung.getText();??????????????????????????????????????????????????
 
 
@@ -64,7 +64,7 @@ public class UsersController {
             selectedUser.ort = ort.getText();
             selectedUser.plz = plz.getText();
             selectedUser.street = street.getText();
-            selectedUser.abteilung = abteilung.getSelectionModel().getSelectedItem();
+           // selectedUser.abteilung = abteilung.getSelectionModel().getSelectedItem();
             // selectedUser.abteilungsnummer = abteilung.getText();??????????????????????????????????????????????????
             a.number = Integer.toString(number + 1);
 

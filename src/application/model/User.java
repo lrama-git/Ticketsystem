@@ -5,6 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TextField;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class User {
     public String number;
@@ -13,16 +17,46 @@ public class User {
     public String street;
     public String plz;
     public String ort;
-    public Department abteilung;
+    public String land;
+    public String abteilung;
 
-    @Override
-    public String toString() {
-        return number + " - " + title + name;
-    }
+    //  @Override
+    //public String toString() {
+    //  return number + " - " + title + name;
+    //}
 
-    public String newCSVLine() {
-        return number + "\";\"" + title + "\";\"" + name + "\";\"" + street + "\";\"" +
-                plz + "\";\"" + ort + "\";\"" + abteilung.number + "\";\"";
+   // public String newCSVLine() {
+     //   return number + "\";\"" + title + "\";\"" + name + "\";\"" + street + "\";\"" +
+       //         plz + "\";\"" + ort + "\";\"" + abteilung.number + "\";\"";
+  //  }
+
+    public static ObservableList<User> load() {
+        ObservableList<User> list = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM users");
+
+            while (result.next()) {
+                // Status s = new Status(result.getInt("status_id"), result.getString("name"));
+                User s = new User();
+                s.number = result.getString("user_id");
+                s.name = result.getString("name");
+                s.title = result.getString("title");
+                s.street = result.getString("street");
+                s.plz = result.getString("zip");
+                s.ort = result.getString("city");
+                s.land = result.getString("country");
+                s.abteilung = result.getString("department");
+                list.add(s);
+            }
+        } catch (SQLException throwables) {
+
+        }
+        return list;
     }
 
     //3;Dipl-Ing.;Heinz Schweiger;AC/DC Straße 1;666;Rockcity;1
@@ -48,7 +82,7 @@ public class User {
                         a.street = words[3];
                         a.plz = words[4];
                         a.ort = words[5];
-                        a.abteilung = new Department(Integer.getInteger(words[6]), "");
+                        //   a.abteilung = new Department(Integer.getInteger(words[6]), "");
 
                         return result;
                     }
@@ -68,7 +102,7 @@ public class User {
             BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
 
             for (User a : result) {
-                bw.write(a.newCSVLine());
+               // bw.write(a.newCSVLine());
 
             }
             bw.flush();

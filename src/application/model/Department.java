@@ -4,19 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Department {
-    public int number;
+    public String number;
     public String name;
 
-    public Department(int id, String name){
-        number = id;
-        this.name = name;
-    }
-    public Department(){
-        number = 0;
-        name ="";
-    }
+    //  public Department(int id, String name){
+    //    number = id;
+    //  this.name = name;
+    //}
+    //public Department(){
+    //  number = 0;
+    //name ="";
+    //}
 
     @Override
     public String toString() {
@@ -25,6 +29,29 @@ public class Department {
 
     public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
+    }
+
+    public static ObservableList<Department> load() {
+        ObservableList<Department> list = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM departments");
+
+            while (result.next()) {
+                // Status s = new Status(result.getInt("status_id"), result.getString("name"));
+                Department s = new Department();
+                s.number = result.getString("department");
+                s.name = result.getString("name");
+                list.add(s);
+            }
+        } catch (SQLException throwables) {
+
+        }
+        return list;
     }
 
 
@@ -42,7 +69,7 @@ public class Department {
                     Department a = new Department();
 
                     String[] words = s.split(";");
-                    a.number = Integer.getInteger(words[0]);
+                    //a.number = Integer.getInteger(words[0]);
                     a.name = words[1];
 
 

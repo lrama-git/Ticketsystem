@@ -1,7 +1,7 @@
 package application.controller;
 
 import application.model.Department;
-import application.model.Status;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ public class DepartmentController {
     private Department selectedDepartment = null;
 
     public void initialize() {
-        departmentListView.setItems(Department.load("department.csv"));
+        departmentListView.setItems(Department.load());
     }
 
     public void deleClicked(ActionEvent actionEvent) {
@@ -42,7 +42,7 @@ public class DepartmentController {
             Department a = new Department();
 
             a.name = departmentTextfield.getText();
-            a.number = number + 1;
+            //a.number = number + 1;
 
             list.add(a);
         }

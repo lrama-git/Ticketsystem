@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Priority {
-   // public int id;
+   public int id;
     public String name;
     public String number;
 
