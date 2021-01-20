@@ -30,6 +30,35 @@ public class Department {
     public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
     }
+    public void delete(){
+        try{
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement= null;
+            statement= connection.createStatement();
+            statement.executeUpdate("DELETE FROM priorities WHERE departments= "+id);
+
+        }catch (SQLException throwables){
+
+        }
+
+    }
+    public void update(){
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement= null;
+            statement= connection.prepareStatement("UPDATE priorities SET name = ? WHERE departments=?");
+            statement.setString(1, name);
+            statement.setInt(2, id);
+
+            statement.executeUpdate();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+
+        }
+    }
+
 
     public static ObservableList<Department> load() {
         ObservableList<Department> list = FXCollections.observableArrayList();

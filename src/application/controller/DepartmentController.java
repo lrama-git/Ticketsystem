@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import java.io.*;
 
@@ -25,28 +26,22 @@ public class DepartmentController {
     }
 
     public void deleClicked(ActionEvent actionEvent) {
-        Department selected = departmentListView.getSelectionModel().getSelectedItem();
+        nameTextField.clear();
+        elementListView.getItems().remove(selectedItem);
 
-        list.remove(selected);
-        departmentListView.refresh();
+        selectedItem.delete();
 
-        Department.fileWriter(list);
     }
 
     public void saveClicked(ActionEvent actionEvent) {
-        if (this.selectedDepartment != null) {
-            selectedDepartment.name = departmentTextfield.getText();
+        if(selectedItem != null) {
+            selectedItem.name = nameTextField.getText();
 
-            departmentListView.refresh();
-        } else {
-            Department a = new Department();
+            elementListView.refresh();
 
-            a.name = departmentTextfield.getText();
-            //a.number = number + 1;
+            selectedItem.update();
 
-            list.add(a);
         }
-        Department.fileWriter(list);
     }
 
     public void newClicked(ActionEvent actionEvent) {
@@ -63,5 +58,9 @@ public class DepartmentController {
 
             departmentTextfield.setText(selected.name);
         }
+    }
+
+    public void cancelClicked(ActionEvent actionEvent){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
     }
 }
