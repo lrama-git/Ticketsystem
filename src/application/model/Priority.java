@@ -16,6 +16,19 @@ public class Priority {
     public String name;
     public String number;
 
+    public Priority(int id, String name) {
+        this.number = Integer.toString(id);
+        this.name = name;
+    }
+
+
+
+
+    public Priority(int id, String name) {
+        this.number = Integer.toString(id);
+        this.name = name;
+
+    }
     //public Priority(int id, String name) {
       //  this.number = id;
     //    this.name = name;
@@ -33,6 +46,35 @@ public class Priority {
 
     public String newCSVLine() {
         return number + "\";\"" + name + "\";\"";
+    }
+
+    public void delete(){
+        try{
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement= null;
+            statement= connection.createStatement();
+            statement.executeUpdate("DELETE FROM priorities WHERE priority_id= "+id);
+
+        }catch (SQLException throwables){
+
+        }
+
+    }
+    public void update(){
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement= null;
+            statement= connection.prepareStatement("UPDATE priorities SET name = ? WHERE priority_id=?");
+            statement.setString(1, name);
+            statement.setInt(2, id);
+
+            statement.executeUpdate();
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+
+        }
     }
 
     public static ObservableList<Priority> loadList() {

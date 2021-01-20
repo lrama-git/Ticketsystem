@@ -6,6 +6,9 @@ import javafx.collections.ObservableList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Ticket {
     public int nummer;
@@ -34,7 +37,31 @@ public class Ticket {
     public String toString() {
         return nummer + " - " + name ;
     }
+    public static ObservableList<Ticket> loadList() {
+        ObservableList<Ticket> list = FXCollections.observableArrayList();
 
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM tickets");
+
+            while (result.next()) {
+                // Status s = new Status(result.getInt("status_id"), result.getString("name"));
+                Ticket t = new Ticket();
+                t.nummer = Integer.getInteger(String.valueOf(result));
+                t.name = result.getString("name");
+                t.priority = new Priority(result.getInt("priority_id"), "");
+                t.status = new Status(result.getInt("status_id"), "");
+                t.description = Integer.toString(result);//null AHnung wie ich das machen soll? das is ein resultset
+                list.add(t);
+            }
+        } catch (SQLException throwables) {
+
+        }
+        return list;
+    }
 
     public static ObservableList<Ticket> loadFile(String filename) {
         ObservableList<Ticket> result = FXCollections.observableArrayList();

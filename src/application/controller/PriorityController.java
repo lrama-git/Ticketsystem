@@ -41,7 +41,16 @@ public class PriorityController {
     }
 
     public void saveClicked(ActionEvent actionEvent) {
-        if (this.selectedPriority != null) {
+        if(selectedItem != null) {
+            selectedItem.name = nameTextField.getText();
+
+            elementListView.refresh();
+
+            selectedItem.update();
+
+        }
+
+        /**if (this.selectedPriority != null) {
             // Aktualisiere die Artikeldaten
             // (übernimm die aktuellen Daten von den Textfeldern)
             // und speichere alles in die Datei
@@ -60,14 +69,18 @@ public class PriorityController {
             // und speichere alles in die Datei
         }
         Priority.fileWriter(list);
+         */
     }
 
     public void deleteClicked(ActionEvent actionEvent) {
-        Priority selected = priorityListView.getSelectionModel().getSelectedItem();
 
-        list.remove(selected);
-        priorityListView.refresh();
+        nameTextField.clear();
+        elementListView.getItems().remove(selectedItem);
 
-        Priority.fileWriter(list);
+        selectedItem.delete()
+
+    }
+    public void cancelClicked(){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
     }
 }
