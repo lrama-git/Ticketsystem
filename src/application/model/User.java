@@ -11,24 +11,39 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class User {
-    public String number;
+    public int id;
+    public int zip;
+    public Department department;
+    //public String number;
     public String name;
     public String title;
     public String street;
-    public String plz;
-    public String ort;
-    public String land;
-    public String abteilung;
+    //public String zip;
+    public String city;
+    //public String land;
+    //public String abteilung;
 
-    //  @Override
-    //public String toString() {
-    //  return number + " - " + title + name;
-    //}
+    public User(int id, String title, String name, String street, int zip, String city, int department) {
+        this.id = id;
+        this.title = title;
+        this.name = name;
+        this.street = street;
+        this.zip = zip;
+        this.city = city;
 
-   // public String newCSVLine() {
-     //   return number + "\";\"" + title + "\";\"" + name + "\";\"" + street + "\";\"" +
-       //         plz + "\";\"" + ort + "\";\"" + abteilung.number + "\";\"";
-  //  }
+        this.department = Department.getByid(department);
+    }
+
+    @Override
+    public String toString() {
+        return id + " - " + title + name;
+    }
+
+    // public String newCSVLine() {
+    //   return number + "\";\"" + title + "\";\"" + name + "\";\"" + street + "\";\"" +
+    //         plz + "\";\"" + ort + "\";\"" + abteilung.number + "\";\"";
+    //  }
+
 
     public static ObservableList<User> load() {
         ObservableList<User> list = FXCollections.observableArrayList();
@@ -42,18 +57,19 @@ public class User {
 
             while (result.next()) {
                 // Status s = new Status(result.getInt("status_id"), result.getString("name"));
-                User s = new User();
-                s.number = result.getString("user_id");
-                s.name = result.getString("name");
-                s.title = result.getString("title");
-                s.street = result.getString("street");
-                s.plz = result.getString("zip");
-                s.ort = result.getString("city");
-                s.land = result.getString("country");
-                s.abteilung = result.getString("department");
+                User s = new User(
+                        result.getInt("user_id"),
+                        result.getString("name"),
+                        result.getString("title"),
+                        result.getString("street"),
+                        result.getInt("zip"),
+                        result.getString("city"),
+                        result.getInt("department_id")
+                        );
                 list.add(s);
             }
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
 
         }
         return list;
@@ -102,7 +118,7 @@ public class User {
             BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
 
             for (User a : result) {
-               // bw.write(a.newCSVLine());
+                // bw.write(a.newCSVLine());
 
             }
             bw.flush();

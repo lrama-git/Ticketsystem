@@ -10,25 +10,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Department {
-    public String number;
+    public int id;
     public String name;
 
-    //  public Department(int id, String name){
-    //    number = id;
-    //  this.name = name;
-    //}
-    //public Department(){
-    //  number = 0;
-    //name ="";
-    //}
+    public Department(int id, String name){
+        this.id = id;
+      this.name = name;
+    }
+    public Department(){
+      id = 0;
+    name ="";
+    }
 
     @Override
     public String toString() {
-        return number + " - " + name;
+        return id + " - " + name;
     }
 
     public String newCSVLine() {
-        return number + "\";\"" + name + "\";\"";
+        return id + "\";\"" + name + "\";\"";
+    }
+    public static Department getByid(int id){
+        Department obj = null;
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM departments WHERE id= "+id);
+
+            if(result.next()){
+                obj= new Department(result.getInt("department_id"), result.getString("name"));
+             //   obj.name= result.getString("name");
+               // obj.id= result.getInt("department_id");
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return obj;
+
     }
     public void delete(){
         try{
@@ -72,9 +92,11 @@ public class Department {
 
             while (result.next()) {
                 // Status s = new Status(result.getInt("status_id"), result.getString("name"));
-                Department s = new Department();
+                Department s = new Department(Integer.parseInt([0]));
+
                 s.number = result.getString("department");
                 s.name = result.getString("name");
+                list.add(s);
                 list.add(s);
             }
         } catch (SQLException throwables) {
