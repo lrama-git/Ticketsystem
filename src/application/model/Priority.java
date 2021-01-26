@@ -12,23 +12,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Priority {
-   public int id;
-    public String name;
-    public String number;
+   public int id=0;
+    public String name="";
+
 
     public Priority(int id, String name) {
-        this.number = Integer.toString(id);
+        this.id = id;
         this.name = name;
     }
 
 
 
 
-    public Priority(int id, String name) {
-        this.number = Integer.toString(id);
-        this.name = name;
+   // public Priority(int id, String name) {
+     //   this.number = Integer.toString(id);
+       // this.name = name;
 
-    }
+    //  }
     //public Priority(int id, String name) {
       //  this.number = id;
     //    this.name = name;
@@ -41,12 +41,33 @@ public class Priority {
 
     @Override
     public String toString() {
-        return number + " - " + name;
+        return id + " - " + name;
     }
 
     public String newCSVLine() {
-        return number + "\";\"" + name + "\";\"";
+        return id + "\";\"" + name + "\";\"";
     }
+    public static Priority getByid(int id){
+        Priority obj = null;
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM status WHERE id= "+id);
+
+            if(result.next()){
+                obj= new Priority(result.getInt("priority_id"), result.getString("name"));
+                //   obj.name= result.getString("name");
+                // obj.id= result.getInt("department_id");
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return obj;
+
+    }
+
 
     public void delete(){
         try{

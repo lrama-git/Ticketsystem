@@ -11,15 +11,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Status {
-    public int id;
-    public String name;
-    public String number;
+    public int id=0;
+    public String name="";
 
-    //public Status(int id, String name) {
-    // this.number = id;
-    //  this.name = name;
 
-    //}
+    public Status(int id, String name) {
+     this.id = id;
+      this.name = name;
+
+
+
+    }
     //public Status(){
     // number = 0;
     //name = "";
@@ -28,11 +30,31 @@ public class Status {
 
     @Override
     public String toString() {
-        return number + " - " + name;
+        return id + " - " + name;
     }
 
     public String newCSVLine() {
-        return number + "\";\"" + name + "\";\"";
+        return id + "\";\"" + name + "\";\"";
+    }
+    public static Status getByid(int id){
+        Status obj = null;
+        try {
+            Connection connection = AccessDb.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM status WHERE id= "+id);
+
+            if(result.next()){
+                obj= new Status(result.getInt("status_id"), result.getString("name"));
+                //   obj.name= result.getString("name");
+                // obj.id= result.getInt("department_id");
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+        return obj;
+
     }
 
     public static ObservableList<Status> loadList() {
@@ -48,7 +70,7 @@ public class Status {
             while (result.next()) {
                 // Status s = new Status(result.getInt("status_id"), result.getString("name"));
                 Status s = new Status();
-                s.number = result.getString("priority_id");
+                s.id = result.getString("status_id");
                 s.name = result.getString("name");
                 list.add(s);
             }
