@@ -10,16 +10,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Department {
-    public int id;
-    public String name;
+    public int id=0;
+    public String name="";
 
     public Department(int id, String name){
         this.id = id;
       this.name = name;
-    }
-    public Department(){
-      id = 0;
-    name ="";
     }
 
     @Override
@@ -94,7 +90,7 @@ public class Department {
                 // Status s = new Status(result.getInt("status_id"), result.getString("name"));
                 Department s = new Department(Integer.parseInt([0]));
 
-                s.number = result.getString("department");
+                s.id = result.getString("department");
                 s.name = result.getString("name");
                 list.add(s);
                 list.add(s);

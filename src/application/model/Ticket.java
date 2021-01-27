@@ -8,35 +8,31 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Ticket {
-    public int nummer;
-    public String name;
-    public String description;
-    public Status status;
-    public Priority priority;
+    public int id = 0;
+    public String name = "";
+    public String description = "";
+    public Status status = null;
+    public Priority priority = null;
 
-    public Ticket(int id, String name,String description, int status, int priority){
-        this.nummer = id;
+    public Ticket(int id, String name, String description, int status, int priority) {
+        this.id = id;
         this.name = name;
-        this.status = new Status(status, "");
-        this.priority = new Priority(priority, "");
-    }
-    public Ticket(){
-        this.nummer = 0;
-        name = "";
-        description = "";
-        status = null;
-        priority = null;
-    }
+        this.description = description;
 
-    //  1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+        this.status = Status.getByid(status);
+        this.priority = Priority.getByid(priority);
+
+    }
 
     @Override
     public String toString() {
-        return nummer + " - " + name ;
+        return id + " - " + name;
     }
+
     public static ObservableList<Ticket> loadList() {
         ObservableList<Ticket> list = FXCollections.observableArrayList();
 
@@ -48,14 +44,17 @@ public class Ticket {
             ResultSet result = statement.executeQuery("SELECT * FROM tickets");
 
             while (result.next()) {
-                // Status s = new Status(result.getInt("status_id"), result.getString("name"));
-                Ticket t = new Ticket();
-                t.nummer = Integer.getInteger(String.valueOf(result));
-                t.name = result.getString("name");
-                t.priority = new Priority(result.getInt("priority_id"), "");
-                t.status = new Status(result.getInt("status_id"), "");
-                t.description = Integer.toString(result);//null AHnung wie ich das machen soll? das is ein resultset
-                list.add(t);
+
+                Ticket s = new Ticket(
+                        result.getInt("status_id"),
+                        result.getInt("priority_id"),
+                        result.getInt("order_id"),
+                        result.getString("name"),
+                        result.getInt("ticket_id")
+
+                );
+                list.add(s);
+
             }
         } catch (SQLException throwables) {
 
@@ -81,7 +80,7 @@ public class Ticket {
                         //  1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
 
                         String[] words = s.split(";");
-                        a.nummer = Integer.getInteger(words[0]);
+                        a.id = Integer.getInteger(words[0]);
                         a.name = words[1];
                         a.description = words[2];
                         a.status = new Status(Integer.getInteger(words[3]), "");
@@ -102,6 +101,6 @@ public class Ticket {
 
     public String newCSVLine() {
         //1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
-        return nummer + "\";\"" + name + "\";\"" + description +  "\";\"" + status.number +  "\";\"" + priority.number +  "\";\"";
+        return id + "\";\"" + name + "\";\"" + description + "\";\"" + status.id + "\";\"" + priority.id + "\";\"";
     }
 }
