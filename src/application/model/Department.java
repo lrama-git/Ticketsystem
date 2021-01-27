@@ -12,7 +12,7 @@ import java.sql.Statement;
 public class Department {
     public int id=0;
     public String name="";
-
+//
     public Department(int id, String name){
         this.id = id;
       this.name = name;
