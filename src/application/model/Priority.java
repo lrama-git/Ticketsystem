@@ -6,10 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Priority {
    public int id=0;
@@ -21,23 +18,6 @@ public class Priority {
         this.name = name;
     }
 
-
-
-
-   // public Priority(int id, String name) {
-     //   this.number = Integer.toString(id);
-       // this.name = name;
-
-    //  }
-    //public Priority(int id, String name) {
-      //  this.number = id;
-    //    this.name = name;
-  //  }
-
-    //public Priority() {
-      //  number = 0;
-        //name = "";
-    //}
 
     @Override
     public String toString() {
@@ -86,12 +66,12 @@ public class Priority {
         try {
             Connection connection = AccessDb.getConnection();
 
-            Statement statement= null;
+            PreparedStatement statement= null;
             statement = connection.prepareStatement("UPDATE priorities SET name = ? WHERE priority_id=?");
             statement.setString(1, name);
-            statement.setInt(2, id);//??
-
+            statement.setInt(2, id);
             statement.executeUpdate();
+
         }catch (SQLException throwables){
             throwables.printStackTrace();
 
@@ -124,55 +104,6 @@ public class Priority {
     }
 }
 
-   /**public static ObservableList<Priority> loadFile(String filename) {
-        ObservableList<Priority> result = FXCollections.observableArrayList();
-
-        String s = null;
-        BufferedReader br = null;
-
-        try {
-            br = new BufferedReader(new FileReader(filename));
-            try {
-                while ((s = br.readLine()) != null) {
-                    // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                    Priority a = new Priority();
-
-                    String[] words = s.split(";");
-                    a.number = Integer.getInteger(words[0]);
-                    a.name = words[1];
-
-                    result.add(a); // füge Artikel zur Liste hinzu
-                }
-            } finally {
-                br.close();
-            }
-        } catch (IOException io) {
-        }
-        return result;
-    }
-
-    public static void fileWriter(ObservableList<Priority> listo) {
-
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("priority.csv"));
-
-            for (Priority a : listo) {
-                bw.write(a.newCSVLine());
-
-            }
-            bw.flush();
-            bw.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void test() {
-    }
 
 
-}
-    */
+

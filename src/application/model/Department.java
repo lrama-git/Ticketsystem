@@ -33,7 +33,7 @@ public class Department {
 
             Statement statement = null;
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM departments WHERE id= "+id);
+            ResultSet result = statement.executeQuery("SELECT * FROM departments WHERE department_id= "+id);
 
             if(result.next()){
                 obj= new Department(result.getInt("department_id"), result.getString("name"));

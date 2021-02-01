@@ -14,14 +14,11 @@ public class User {
     public int id;
     public int zip;
     public Department department;
-    //public String number;
     public String name;
     public String title;
     public String street;
-    //public String zip;
     public String city;
-    //public String land;
-    //public String abteilung;
+
 
     public User(int id, String title, String name, String street, int zip, String city, int department) {
         this.id = id;
@@ -85,24 +82,16 @@ public class User {
         try {
             br = new BufferedReader(new FileReader(filename));
             try {
-                while ((s = br.readLine()) != null) {
-                    while ((s = br.readLine()) != null) {
-                        // s enthält die gesamte Zeile
-                        s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                        User a = new User();
 
-                        String[] words = s.split(";");
-                        a.number = words[0];
-                        a.name = words[1];
-                        a.title = words[2];
-                        a.street = words[3];
-                        a.plz = words[4];
-                        a.ort = words[5];
-                        //   a.abteilung = new Department(Integer.getInteger(words[6]), "");
+                    while ((s = br.readLine()) != null) {
+                        String[] split = s.split(";");
+                        User a = new User(Integer.parseInt(split[0]),split[1],split[2],split[3], Integer.parseInt(split[4]),split[5], Integer.parseInt(split[6]));
+                        result.add(a);
+
 
                         return result;
                     }
-                }
+
             } finally {
                 br.close();
             }

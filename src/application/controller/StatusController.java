@@ -6,9 +6,12 @@ import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 import java.io.*;
 
@@ -16,55 +19,50 @@ public class StatusController {
 
     public ListView<Status> statiListView;
     public TextField statiTextField;
-    ObservableList<Status> list = FXCollections.observableArrayList();
+    public Button cancelButton;
+  //  ObservableList<Status> list = FXCollections.observableArrayList();
     private int number = 0;
 
-    private Status selectedStati = null;
+    private Status selectedItem = null;
 
     public void initialize() {
-        statiListView.setItems(Status.loadList());
+        statiListView.setItems(Priority.loadList());
+        number= statiListView.getItems().size();
     }
 
     public void listclicked(MouseEvent mouseEvent) {
-        Status selected = statiListView.getSelectionModel().getSelectedItem();
-
-        if (selected != null) {
-            this.selectedStati = selected;
-
-            statiTextField.setText(selected.name);
-        }
+        statiTextField.setText(statiListView.getSelectionModel().getSelectedItem().name());
+        selectedItem= statiListView.getSelectionModel().getSelectedItem();
     }
 
     public void newClicked(ActionEvent actionEvent) {
         statiTextField.clear();
 
-        this.selectedStati = null;
+        // lösche die Variable, die den gewählten Artikel
+        // beinhaltet
+        this.selectedItem = null;
     }
 
     public void saveClicked(ActionEvent actionEvent) {
-        if (this.selectedStati != null) {
-
-
-            selectedStati.name = statiTextField.getText();
+        if(selectedItem != null) {
+            selectedItem.name = statiTextField.getText();
 
             statiListView.refresh();
-        } else {
-            Status a = new Status();
 
-            a.name = statiTextField.getText();
-            a.number = Integer.toString(number + 1);
+            selectedItem.update();
 
-            list.add(a);
         }
-        Status.fileWriter(list);
     }
 
     public void deleteClicked(ActionEvent actionEvent) {
-        Status selected = statiListView.getSelectionModel().getSelectedItem();
+        statiTextField.clear();
+        statiListView.getItems().remove(selectedItem);
 
-        list.remove(selected);
-        statiListView.refresh();
+        selectedItem.delete();
+    }
 
-        Status.fileWriter(list);
+    public void cancelClicked(ActionEvent actionEvent) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
 }

@@ -1,35 +1,38 @@
 package application.controller;
 
-import application.model.Priority;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+
+import javafx.scene.layout.Priority;
+import javafx.stage.Stage;
 
 import java.io.*;
 
 public class PriorityController {
     public ListView<Priority> priorityListView;
     public TextField priorityTextfield;
-    ObservableList<Priority> list = FXCollections.observableArrayList();
+    public Button cancelButton;
+   // ObservableList<Priority> list = FXCollections.observableArrayList();
     private int number = 0;
 
-    private Priority selectedPriority = null;
+
+    private Priority selectedItem = null;
 
     public void initialize() {
         priorityListView.setItems(Priority.loadList());
+        number= priorityListView.getItems().size();
     }
 
     public void listclicked(MouseEvent mouseEvent) {
-        Priority selected = priorityListView.getSelectionModel().getSelectedItem();
+        priorityTextfield.setText(priorityListView.getSelectionModel().getSelectedItem().name());
+        selectedItem= priorityListView.getSelectionModel().getSelectedItem();
 
-        if (selected != null) {
-            this.selectedPriority = selected;
-
-            priorityTextfield.setText(selected.name);
-        }
     }
 
     public void newClicked(ActionEvent actionEvent) {
@@ -37,50 +40,32 @@ public class PriorityController {
 
         // lösche die Variable, die den gewählten Artikel
         // beinhaltet
-        this.selectedPriority = null;
+        this.selectedItem = null;
     }
 
     public void saveClicked(ActionEvent actionEvent) {
         if(selectedItem != null) {
-            selectedItem.name = nameTextField.getText();
+            selectedItem.name = priorityTextfield.getText();
 
-            elementListView.refresh();
+            priorityListView.refresh();
 
             selectedItem.update();
 
         }
-
-        /**if (this.selectedPriority != null) {
-            // Aktualisiere die Artikeldaten
-            // (übernimm die aktuellen Daten von den Textfeldern)
-            // und speichere alles in die Datei
-
-            selectedPriority.name = priorityTextfield.getText();
-
-            priorityListView.refresh();
-        } else {
-            Priority a = new Priority();
-
-            a.name = priorityTextfield.getText();
-            a.number = (number + 1);
-
-            list.add(a);
-            // erzeuge neuen Artikel, füge ihn in die ListView ein
-            // und speichere alles in die Datei
-        }
-        Priority.fileWriter(list);
-         */
     }
 
     public void deleteClicked(ActionEvent actionEvent) {
 
-        nameTextField.clear();
-        elementListView.getItems().remove(selectedItem);
+        priorityTextfield.clear();
+        priorityListView.getItems().remove(selectedItem);
 
-        selectedItem.delete()
+        selectedItem.delete();
 
     }
-    public void cancelClicked(){
+
+    public void cancelClicked(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
+
 }

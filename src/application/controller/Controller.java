@@ -220,7 +220,7 @@ public class Controller {
         } else {
             Ticket a = new Ticket();
             a = active.getTicket();
-            a.nummer = list.size()+1; //die letzte Zahl(index +1)
+            a.id = list.size()+1; //die letzte Zahl(index +1)
 
             list.add(a);
             //ich muss doch trotzdem ListView auch refreshen?

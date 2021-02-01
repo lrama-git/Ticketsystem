@@ -21,8 +21,8 @@ public class Ticket {
     public Ticket(int id, String name,String description, int status, int priority){
         this.nummer = id;
         this.name = name;
-        this.status = new Status(status, "");
-        this.priority = new Priority(priority, "");
+        this.status = Status.getById(status);
+        this.priority = Priority.getById(priority);
     }
     public Ticket(){
         this.nummer = 0;
@@ -55,7 +55,7 @@ public class Ticket {
                 t.name = result.getString("name");
                 t.priority = new Priority(result.getInt("priority_id"), "");
                 t.status = new Status(result.getInt("status_id"), "");
-                t.description = Integer.toString(result);//null AHnung wie ich das machen soll? das is ein resultset
+                t.description = Integer.toString(result);
                 list.add(t);
             }
         } catch (SQLException throwables) {
@@ -104,7 +104,7 @@ public class Ticket {
     }
 
     public String newCSVLine() {
-        //1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+
         return nummer + "\";\"" + name + "\";\"" + description +  "\";\"" + status.id +  "\";\"" + priority.id +  "\";\"";
     }
 }
