@@ -22,7 +22,7 @@ public class StatusController {
     private Status selectedStati = null;
 
     public void initialize() {
-        statiListView.setItems(Status.loadList();
+        statiListView.setItems(Status.loadList());
     }
 
     public void listclicked(MouseEvent mouseEvent) {
@@ -52,7 +52,7 @@ public class StatusController {
             Status a = new Status();
 
             a.name = statiTextField.getText();
-            a.number = number + 1;
+            a.number = Integer.toString(number + 1);
 
             list.add(a);
         }

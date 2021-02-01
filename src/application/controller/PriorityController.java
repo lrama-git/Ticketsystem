@@ -77,7 +77,7 @@ public class PriorityController {
         nameTextField.clear();
         elementListView.getItems().remove(selectedItem);
 
-        selectedItem.delete();
+        selectedItem.delete()
 
     }
     public void cancelClicked(){
