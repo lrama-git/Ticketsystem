@@ -26,6 +26,7 @@ public class TicketController {
                 break;
             }
         }
+        //
 
         for (Priority p : priorityCombo.getItems()) {
             if (p.number == t.priority.number) {

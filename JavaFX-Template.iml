@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="javafx11.02-swt" level="application" />
     <orderEntry type="library" name="ucanaccess" level="project" />
+    <orderEntry type="library" exported="" name="lib" level="application" />
   </component>
 </module>
