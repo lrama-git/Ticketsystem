@@ -55,7 +55,7 @@ public class Ticket {
                 t.name = result.getString("name");
                 t.priority = new Priority(result.getInt("priority_id"), "");
                 t.status = new Status(result.getInt("status_id"), "");
-                t.description = Integer.toString(result);
+                t.description = Integer.toString(String.valueOf(result));
                 list.add(t);
             }
         } catch (SQLException throwables) {
@@ -76,7 +76,6 @@ public class Ticket {
             br = new BufferedReader(new FileReader(filename));
             try {
                 while ((s = br.readLine()) != null) {
-                    while ((s = br.readLine()) != null) {
                         // s enthält die gesamte Zeile
                         s = s.replace("\"", ""); // ersetze alle " in der Zeile
                         Ticket a = new Ticket();
@@ -94,7 +93,7 @@ public class Ticket {
                         return result;
 
                     }
-                }
+
             } finally {
                 br.close();
             }

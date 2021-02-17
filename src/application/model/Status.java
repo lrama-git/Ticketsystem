@@ -27,7 +27,7 @@ public class Status {
         return id + "\";\"" + name + "\";\"";
     }
 
-    public static Status getByid(int id) {
+    public static Status getById(int id) {
         Status obj = null;
         try {
             Connection connection = AccessDb.getConnection();
@@ -60,7 +60,7 @@ public class Status {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-
+//
         }
     }
 

@@ -27,11 +27,12 @@ public class Priority {
     public String newCSVLine() {
         return id + "\";\"" + name + "\";\"";
     }
-    public static Priority getByid(int id){
+    public static Priority getById(int id){
         Priority obj = null;
         try {
             Connection connection = AccessDb.getConnection();
 
+            //
             Statement statement = null;
             statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT * FROM status WHERE id= "+id);

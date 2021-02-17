@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Department {
     public int id=0;
@@ -63,13 +60,13 @@ public class Department {
         try {
             Connection connection = AccessDb.getConnection();
 
-            Statement statement= null;
-            statement= connection.prepareStatement("UPDATE priorities SET name = ? WHERE departments=?");
+            PreparedStatement statement = null;
+            statement = connection.prepareStatement("UPDATE departments SET name = ? WHERE department_id=?");
             statement.setString(1, name);
             statement.setInt(2, id);
-
             statement.executeUpdate();
-        }catch (SQLException throwables){
+
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
 
         }
@@ -88,9 +85,9 @@ public class Department {
 
             while (result.next()) {
                 // Status s = new Status(result.getInt("status_id"), result.getString("name"));
-                Department s = new Department(Integer.parseInt([0]));
+                Department s = new Department(0, "");
 
-                s.id = result.getString("department");
+                s.id = result.getInt("department");
                 s.name = result.getString("name");
                 list.add(s);
                 list.add(s);
@@ -111,16 +108,20 @@ public class Department {
             br = new BufferedReader(new FileReader(filename));
             try {
                 while ((s = br.readLine()) != null) {
+                    String[] split = s.split(";");
+                    Department a = new Department(Integer.parseInt(split[0]),split[1]);
+                    result.add(a);
                     // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
-                    Department a = new Department();
-
-                    String[] words = s.split(";");
-                    //a.number = Integer.getInteger(words[0]);
-                    a.name = words[1];
+                 //   s = s.replace("\"", ""); // ersetze alle " in der Zeile
 
 
-                    result.add(a); // füge Artikel zur Liste hinzu
+                   // String[] words = s.split(";");
+                    //a.id= Integer.getInteger(words[0]);
+                    //a.name = words[1];
+
+
+
+                    return result;
                 }
             } finally {
                 br.close();
